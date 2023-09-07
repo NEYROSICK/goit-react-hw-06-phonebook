@@ -2,8 +2,12 @@ import PropTypes from 'prop-types';
 import cl from './contactitem.module.css';
 import Trash from 'components/ui/icons/Trash';
 import clsx from 'clsx';
+import { removeContact } from 'redux/actions';
+import { useDispatch } from 'react-redux';
 
-const ContactItem = ({ name, number, deleteContact, url }) => {
+const ContactItem = ({ name, number, url }) => {
+  const dispatch = useDispatch();
+
   return (
     <li className={cl.item}>
       <div className={cl.imgName}>
@@ -23,7 +27,7 @@ const ContactItem = ({ name, number, deleteContact, url }) => {
         <button
           className={cl.button}
           onClick={() => {
-            deleteContact(name);
+            dispatch(removeContact(name));
           }}
         >
           <Trash />

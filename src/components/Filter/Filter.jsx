@@ -1,14 +1,17 @@
 import cl from './filter.module.css';
 import Search from 'components/ui/icons/Search';
-import { useContext } from 'react';
-import { Context } from 'context/globalContext';
+import { useDispatch } from 'react-redux';
+import { changeFilter } from 'redux/actions';
+import debounce from 'lodash.debounce';
 
 const Filter = () => {
-  const { filter, setFilter } = useContext(Context);
+  const dispatch = useDispatch();
 
   const handleFilterChange = e => {
-    setFilter(e.target.value);
+    dispatch(changeFilter(e.target.value));
   };
+
+  const debouncedChange = debounce(handleFilterChange, 300);
 
   return (
     <div className={cl.filter}>
@@ -21,8 +24,7 @@ const Filter = () => {
           type="text"
           name="filter"
           id="filter"
-          onChange={handleFilterChange}
-          value={filter}
+          onChange={debouncedChange}
         />
         <Search />
       </div>

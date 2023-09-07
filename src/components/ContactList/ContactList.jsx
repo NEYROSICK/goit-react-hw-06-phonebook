@@ -1,10 +1,14 @@
 import ContactItem from 'components/ContactItem';
 import cl from 'components/ContactList/contactList.module.css';
-import React, { useContext } from 'react';
-import { Context } from 'context/globalContext';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = () => {
-  const { contacts, filter, setContacts } = useContext(Context);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const contactsJSON = JSON.stringify(contacts);
+  localStorage.setItem('contacts', contactsJSON);
 
   const containsNumbers = inputString => {
     const regex = /\d/;
@@ -17,7 +21,7 @@ const ContactList = () => {
   };
 
   const containsOnlyNumbers = inputString => {
-    const regex = /^\d+$/; // Regular expression to match only digits
+    const regex = /^\d+$/;
     return regex.test(inputString);
   };
 
@@ -56,13 +60,6 @@ const ContactList = () => {
   };
 
   const renderContactList = () => {
-    const deleteContact = contactName => {
-      const newContacts = contacts.filter(
-        contact => contact.name !== contactName
-      );
-      setContacts(newContacts);
-    };
-
     if (!contacts.length) {
       return (
         <p className={cl.emptyMessage}>
@@ -82,7 +79,6 @@ const ContactList = () => {
           {filterContacts().map(contact => {
             return (
               <ContactItem
-                deleteContact={deleteContact}
                 key={contact.id}
                 name={contact.name}
                 number={contact.number}

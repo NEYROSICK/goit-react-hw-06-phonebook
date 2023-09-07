@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import cl from './contactForm.module.css';
 import Plus from 'components/ui/icons/Plus';
 import clsx from 'clsx';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { Context } from 'context/globalContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/actions';
+import { getContacts } from 'redux/selectors';
 
 Notify.init({
   useIcon: false,
@@ -27,7 +29,8 @@ export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const { contacts, setContacts } = useContext(Context);
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const reset = () => {
     setName('');
@@ -107,7 +110,7 @@ export default function ContactForm() {
       number: number,
     };
 
-    setContacts([newContact, ...contacts]);
+    dispatch(addContact(newContact));
     reset();
   };
 
