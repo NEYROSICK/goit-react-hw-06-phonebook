@@ -7,9 +7,6 @@ const ContactList = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
-  const contactsJSON = JSON.stringify(contacts);
-  localStorage.setItem('contacts', contactsJSON);
-
   const containsNumbers = inputString => {
     const regex = /\d/;
     return regex.test(inputString);
