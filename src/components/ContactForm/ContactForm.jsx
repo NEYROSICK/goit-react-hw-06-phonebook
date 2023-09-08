@@ -5,8 +5,8 @@ import Plus from 'components/ui/icons/Plus';
 import clsx from 'clsx';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/actions';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
 Notify.init({
   useIcon: false,

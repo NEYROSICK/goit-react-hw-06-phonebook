@@ -1,8 +1,8 @@
 import cl from './filter.module.css';
 import Search from 'components/ui/icons/Search';
 import { useDispatch } from 'react-redux';
-import { changeFilter } from 'redux/actions';
 import debounce from 'lodash.debounce';
+import { changeFilter } from 'redux/filterSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
